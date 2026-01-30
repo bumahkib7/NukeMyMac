@@ -408,7 +408,7 @@ class LicenseManager: ObservableObject {
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
-        let body = ["key": normalizedKey, "activate": true]
+        let body: [String: Any] = ["key": normalizedKey, "activate": true]
         request.httpBody = try? JSONSerialization.data(withJSONObject: body)
 
         do {

@@ -76,9 +76,12 @@ struct LicenseKeyInputView: View {
                                     RoundedRectangle(cornerRadius: 8)
                                         .stroke(errorMessage != nil ? Color.red.opacity(0.5) : Color.clear, lineWidth: 1)
                                 )
-                                .onChange(of: licenseKey) { _, newValue in
+                                .onChange(of: licenseKey) { newValue in
                                     errorMessage = nil
-                                    licenseKey = formatLicenseKey(newValue)
+                                    let formatted = formatLicenseKey(newValue)
+                                    if formatted != newValue {
+                                        licenseKey = formatted
+                                    }
                                 }
 
                             Button(action: pasteFromClipboard) {
