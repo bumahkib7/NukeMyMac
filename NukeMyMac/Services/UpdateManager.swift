@@ -48,7 +48,7 @@ struct AppUpdate {
 class UpdateManager: ObservableObject {
     static let shared = UpdateManager()
 
-    private let githubRepo = "nukemymac/nukemymac"
+    private let githubRepo = "bumahkib7/NukeMyMac"
     private let checkIntervalHours: Double = 24
     private let lastCheckKey = "lastUpdateCheck"
     private let lastSeenVersionKey = "lastSeenVersion"
