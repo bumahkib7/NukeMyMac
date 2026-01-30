@@ -1,0 +1,82 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+
+      - name: Get version from tag
+        id: version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+
+      - name: Build app
+        run: |
+          xcodebuild -project NukeMyMac.xcodeproj \
+            -scheme NukeMyMac \
+            -configuration Release \
+            -archivePath build/NukeMyMac.xcarchive \
+            -destination "generic/platform=macOS" \
+            archive \
+            CODE_SIGN_IDENTITY="-" \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO
+
+      - name: Export app
+        run: |
+          xcodebuild -exportArchive \
+            -archivePath build/NukeMyMac.xcarchive \
+            -exportPath build \
+            -exportOptionsPlist scripts/ExportOptions.plist
+
+      - name: Create DMG
+        env:
+          VERSION: ${{ steps.version.outputs.VERSION }}
+        run: |
+          mkdir -p build/dmg_temp
+          cp -R build/NukeMyMac.app build/dmg_temp/
+          ln -s /Applications build/dmg_temp/Applications
+          hdiutil create -volname "NukeMyMac" \
+            -srcfolder build/dmg_temp \
+            -ov -format UDZO \
+            "build/NukeMyMac-${VERSION}.dmg"
+
+          # Create checksum
+          shasum -a 256 "build/NukeMyMac-${VERSION}.dmg" > "build/NukeMyMac-${VERSION}.dmg.sha256"
+
+      - name: Extract changelog
+        id: changelog
+        env:
+          VERSION: ${{ steps.version.outputs.VERSION }}
+        run: |
+          CHANGELOG=$(awk "/## \[${VERSION}\]/,/## \[/" CHANGELOG.md | head -n -1 || echo "Release v${VERSION}")
+          echo "CHANGELOG<<EOF" >> $GITHUB_OUTPUT
+          echo "$CHANGELOG" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          name: NukeMyMac v${{ steps.version.outputs.VERSION }}
+          body: ${{ steps.changelog.outputs.CHANGELOG }}
+          draft: false
+          prerelease: false
+          files: |
+            build/NukeMyMac-${{ steps.version.outputs.VERSION }}.dmg
+            build/NukeMyMac-${{ steps.version.outputs.VERSION }}.dmg.sha256
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

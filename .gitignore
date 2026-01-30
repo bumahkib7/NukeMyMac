@@ -1,0 +1,40 @@
+# Xcode
+build/
+DerivedData/
+*.xcuserstate
+*.xcuserdatad/
+xcuserdata/
+*.xcworkspace/xcuserdata/
+
+# macOS
+.DS_Store
+*.swp
+*~.nib
+.AppleDouble
+.LSOverride
+
+# Build outputs
+*.app
+*.dmg
+*.zip
+*.pkg
+
+# Release artifacts
+release/
+dist/
+
+# Environment
+.env
+.env.local
+
+# IDE
+.idea/
+*.swp
+*.swo
+
+# Temporary files
+*.tmp
+*.log
+
+# Playwright
+.playwright-mcp/

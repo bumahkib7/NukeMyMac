@@ -1,0 +1,584 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXContainerItemProxy section */
+		A5D26FD22F2BE0EF00671DDB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A5D26FBA2F2BE0ED00671DDB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A5D26FC12F2BE0ED00671DDB;
+			remoteInfo = NukeMyMac;
+		};
+		A5D26FDC2F2BE0EF00671DDB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A5D26FBA2F2BE0ED00671DDB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A5D26FC12F2BE0ED00671DDB;
+			remoteInfo = NukeMyMac;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		A5D26FC22F2BE0ED00671DDB /* NukeMyMac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NukeMyMac.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A5D26FD12F2BE0EF00671DDB /* NukeMyMacTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NukeMyMacTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A5D26FDB2F2BE0EF00671DDB /* NukeMyMacUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NukeMyMacUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		A5D26FC42F2BE0ED00671DDB /* NukeMyMac */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = NukeMyMac;
+			sourceTree = "<group>";
+		};
+		A5D26FD42F2BE0EF00671DDB /* NukeMyMacTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = NukeMyMacTests;
+			sourceTree = "<group>";
+		};
+		A5D26FDE2F2BE0EF00671DDB /* NukeMyMacUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = NukeMyMacUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A5D26FBF2F2BE0ED00671DDB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A5D26FCE2F2BE0EF00671DDB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A5D26FD82F2BE0EF00671DDB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A5D26FB92F2BE0ED00671DDB = {
+			isa = PBXGroup;
+			children = (
+				A5D26FC42F2BE0ED00671DDB /* NukeMyMac */,
+				A5D26FD42F2BE0EF00671DDB /* NukeMyMacTests */,
+				A5D26FDE2F2BE0EF00671DDB /* NukeMyMacUITests */,
+				A5D26FC32F2BE0ED00671DDB /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A5D26FC32F2BE0ED00671DDB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A5D26FC22F2BE0ED00671DDB /* NukeMyMac.app */,
+				A5D26FD12F2BE0EF00671DDB /* NukeMyMacTests.xctest */,
+				A5D26FDB2F2BE0EF00671DDB /* NukeMyMacUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A5D26FC12F2BE0ED00671DDB /* NukeMyMac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A5D26FE52F2BE0EF00671DDB /* Build configuration list for PBXNativeTarget "NukeMyMac" */;
+			buildPhases = (
+				A5D26FBE2F2BE0ED00671DDB /* Sources */,
+				A5D26FBF2F2BE0ED00671DDB /* Frameworks */,
+				A5D26FC02F2BE0ED00671DDB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				A5D26FC42F2BE0ED00671DDB /* NukeMyMac */,
+			);
+			name = NukeMyMac;
+			packageProductDependencies = (
+			);
+			productName = NukeMyMac;
+			productReference = A5D26FC22F2BE0ED00671DDB /* NukeMyMac.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A5D26FD02F2BE0EF00671DDB /* NukeMyMacTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A5D26FE82F2BE0EF00671DDB /* Build configuration list for PBXNativeTarget "NukeMyMacTests" */;
+			buildPhases = (
+				A5D26FCD2F2BE0EF00671DDB /* Sources */,
+				A5D26FCE2F2BE0EF00671DDB /* Frameworks */,
+				A5D26FCF2F2BE0EF00671DDB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A5D26FD32F2BE0EF00671DDB /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				A5D26FD42F2BE0EF00671DDB /* NukeMyMacTests */,
+			);
+			name = NukeMyMacTests;
+			packageProductDependencies = (
+			);
+			productName = NukeMyMacTests;
+			productReference = A5D26FD12F2BE0EF00671DDB /* NukeMyMacTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		A5D26FDA2F2BE0EF00671DDB /* NukeMyMacUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A5D26FEB2F2BE0EF00671DDB /* Build configuration list for PBXNativeTarget "NukeMyMacUITests" */;
+			buildPhases = (
+				A5D26FD72F2BE0EF00671DDB /* Sources */,
+				A5D26FD82F2BE0EF00671DDB /* Frameworks */,
+				A5D26FD92F2BE0EF00671DDB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A5D26FDD2F2BE0EF00671DDB /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				A5D26FDE2F2BE0EF00671DDB /* NukeMyMacUITests */,
+			);
+			name = NukeMyMacUITests;
+			packageProductDependencies = (
+			);
+			productName = NukeMyMacUITests;
+			productReference = A5D26FDB2F2BE0EF00671DDB /* NukeMyMacUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A5D26FBA2F2BE0ED00671DDB /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2620;
+				LastUpgradeCheck = 2620;
+				TargetAttributes = {
+					A5D26FC12F2BE0ED00671DDB = {
+						CreatedOnToolsVersion = 26.2;
+					};
+					A5D26FD02F2BE0EF00671DDB = {
+						CreatedOnToolsVersion = 26.2;
+						TestTargetID = A5D26FC12F2BE0ED00671DDB;
+					};
+					A5D26FDA2F2BE0EF00671DDB = {
+						CreatedOnToolsVersion = 26.2;
+						TestTargetID = A5D26FC12F2BE0ED00671DDB;
+					};
+				};
+			};
+			buildConfigurationList = A5D26FBD2F2BE0ED00671DDB /* Build configuration list for PBXProject "NukeMyMac" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A5D26FB92F2BE0ED00671DDB;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = A5D26FC32F2BE0ED00671DDB /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A5D26FC12F2BE0ED00671DDB /* NukeMyMac */,
+				A5D26FD02F2BE0EF00671DDB /* NukeMyMacTests */,
+				A5D26FDA2F2BE0EF00671DDB /* NukeMyMacUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A5D26FC02F2BE0ED00671DDB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A5D26FCF2F2BE0EF00671DDB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A5D26FD92F2BE0EF00671DDB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A5D26FBE2F2BE0ED00671DDB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A5D26FCD2F2BE0EF00671DDB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A5D26FD72F2BE0EF00671DDB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A5D26FD32F2BE0EF00671DDB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A5D26FC12F2BE0ED00671DDB /* NukeMyMac */;
+			targetProxy = A5D26FD22F2BE0EF00671DDB /* PBXContainerItemProxy */;
+		};
+		A5D26FDD2F2BE0EF00671DDB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A5D26FC12F2BE0ED00671DDB /* NukeMyMac */;
+			targetProxy = A5D26FDC2F2BE0EF00671DDB /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		A5D26FE32F2BE0EF00671DDB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 52K735MXW9;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		A5D26FE42F2BE0EF00671DDB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 52K735MXW9;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		A5D26FE62F2BE0EF00671DDB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 52K735MXW9;
+				ENABLE_APP_SANDBOX = NO;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nukemymac.driver.NukeMyMac;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		A5D26FE72F2BE0EF00671DDB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 52K735MXW9;
+				ENABLE_APP_SANDBOX = NO;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nukemymac.driver.NukeMyMac;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		A5D26FE92F2BE0EF00671DDB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 52K735MXW9;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nukemymac.driver.NukeMyMacTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NukeMyMac.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/NukeMyMac";
+			};
+			name = Debug;
+		};
+		A5D26FEA2F2BE0EF00671DDB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 52K735MXW9;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nukemymac.driver.NukeMyMacTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NukeMyMac.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/NukeMyMac";
+			};
+			name = Release;
+		};
+		A5D26FEC2F2BE0EF00671DDB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 52K735MXW9;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nukemymac.driver.NukeMyMacUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = NukeMyMac;
+			};
+			name = Debug;
+		};
+		A5D26FED2F2BE0EF00671DDB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 52K735MXW9;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nukemymac.driver.NukeMyMacUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = NukeMyMac;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A5D26FBD2F2BE0ED00671DDB /* Build configuration list for PBXProject "NukeMyMac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A5D26FE32F2BE0EF00671DDB /* Debug */,
+				A5D26FE42F2BE0EF00671DDB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A5D26FE52F2BE0EF00671DDB /* Build configuration list for PBXNativeTarget "NukeMyMac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A5D26FE62F2BE0EF00671DDB /* Debug */,
+				A5D26FE72F2BE0EF00671DDB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A5D26FE82F2BE0EF00671DDB /* Build configuration list for PBXNativeTarget "NukeMyMacTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A5D26FE92F2BE0EF00671DDB /* Debug */,
+				A5D26FEA2F2BE0EF00671DDB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A5D26FEB2F2BE0EF00671DDB /* Build configuration list for PBXNativeTarget "NukeMyMacUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A5D26FEC2F2BE0EF00671DDB /* Debug */,
+				A5D26FED2F2BE0EF00671DDB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A5D26FBA2F2BE0ED00671DDB /* Project object */;
+}
