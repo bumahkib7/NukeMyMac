@@ -136,7 +136,7 @@ struct LicenseKeyValidator {
     }
 
     /// Website URL for purchasing
-    static let purchaseURL = URL(string: "https://nukemymac.com/#pricing")!
+    static let purchaseURL = URL(string: "https://nukemymac-website.vercel.app/#pricing")!
 }
 
 // MARK: - License Manager
@@ -400,7 +400,7 @@ class LicenseManager: ObservableObject {
         }
 
         // Call validation API
-        guard let url = URL(string: "https://nukemymac.com/api/validate") else {
+        guard let url = URL(string: "https://nukemymac-website.vercel.app/api/validate") else {
             return .networkError
         }
 
