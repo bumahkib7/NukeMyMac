@@ -103,11 +103,24 @@ enum ProductID {
 // MARK: - License Key Result
 
 enum LicenseKeyResult {
-    case success(tier: LicenseTier)
+    case success(tier: LicenseTier, expiresAt: Date?)
     case invalidFormat
     case invalidKey
+    case expired
+    case revoked
     case networkError
     case alreadyActivated
+}
+
+// MARK: - Server Validation Response
+
+struct LicenseValidationResponse: Codable {
+    let valid: Bool
+    let tier: String?
+    let activated: Bool?
+    let createdAt: String?
+    let expiresAt: String?
+    let error: String?
 }
 
 // MARK: - License Key Validation
@@ -168,6 +181,15 @@ class LicenseManager: ObservableObject {
     // License key state
     @Published private(set) var activatedLicenseKey: String?
     @Published private(set) var licenseKeyError: String?
+    @Published private(set) var licenseExpiresAt: Date?
+    @Published private(set) var lastValidationDate: Date?
+
+    // Validation config
+    private let validationInterval: TimeInterval = 24 * 60 * 60 // 24 hours
+    private let offlineGracePeriod: TimeInterval = 7 * 24 * 60 * 60 // 7 days offline grace
+    private var validationTimer: Timer?
+    private let lastValidationKey = "nk_lv_\(String("last_validation".utf8.md5))"
+    private let licenseExpiresKey = "nk_le_\(String("license_expires".utf8.md5))"
 
     // MARK: - Developer Backdoor Keys
     private let devMachineIDs: Set<String> = [
@@ -192,6 +214,7 @@ class LicenseManager: ObservableObject {
         loadSavedLicense()
         loadTrialState()
         loadLicenseKey()
+        loadValidationState()
 
         // Start listening for StoreKit transactions
         updateListenerTask = listenForTransactions()
@@ -199,16 +222,25 @@ class LicenseManager: ObservableObject {
         // Start trial expiration checker
         startTrialChecker()
 
-        // Fetch products
+        // Start license validation timer
+        startValidationTimer()
+
+        // Fetch products and validate license on startup
         Task {
             await fetchProducts()
             await checkSubscriptionStatus()
+
+            // Validate license key online if we have one
+            if activatedLicenseKey != nil {
+                await validateLicenseOnline()
+            }
         }
     }
 
     deinit {
         updateListenerTask?.cancel()
         trialCheckTimer?.invalidate()
+        validationTimer?.invalidate()
     }
 
     // MARK: - Feature Access
@@ -348,7 +380,7 @@ class LicenseManager: ObservableObject {
 
     // MARK: - License Key Activation
 
-    /// Activate a license key purchased from the website
+    /// Activate a license key purchased from the website (with online validation)
     /// - Parameter key: The license key in format NUKE-XXXX-XXXX-XXXX-XXXX
     /// - Returns: Result of the activation attempt
     func activateLicenseKey(_ key: String) async -> LicenseKeyResult {
@@ -356,50 +388,70 @@ class LicenseManager: ObservableObject {
         let normalizedKey = key.uppercased().trimmingCharacters(in: .whitespacesAndNewlines)
 
         // Validate format offline first
-        let (valid, tier) = LicenseKeyValidator.validateFormat(normalizedKey)
+        let (valid, _) = LicenseKeyValidator.validateFormat(normalizedKey)
 
-        guard valid, let licenseTier = tier else {
+        guard valid else {
             licenseKeyError = "Invalid license key format"
             return .invalidFormat
         }
 
         // Check if already activated with this key
-        if activatedLicenseKey == normalizedKey {
+        if activatedLicenseKey == normalizedKey && currentTier.isPro {
             return .alreadyActivated
         }
 
-        // Optionally validate with server (if online validation is desired)
-        // For now, we do offline validation only based on key format
-        // In production, you might want to call the /api/validate endpoint
+        // Get machine ID for activation tracking
+        let machineId = getMachineUUID()
 
-        // Activate the license
-        activatedLicenseKey = normalizedKey
-        currentTier = licenseTier
-        saveLicenseKey()
-        saveLicense()
+        // Validate and activate with server
+        let result = await validateWithServer(key: normalizedKey, activate: true, machineId: machineId)
 
-        // Clear trial if active
-        if isTrialExpired == false && trialEndDate != nil {
-            isTrialExpired = true
+        switch result {
+        case .success(let tier, let expiresAt):
+            // Activate the license locally
+            activatedLicenseKey = normalizedKey
+            currentTier = tier
+            licenseExpiresAt = expiresAt
+            lastValidationDate = Date()
+            saveLicenseKey()
+            saveLicense()
+            saveValidationState()
+
+            // Clear trial if active
+            if isTrialExpired == false && trialEndDate != nil {
+                isTrialExpired = true
+            }
+
+            print("✅ License key activated: \(normalizedKey) -> \(tier.displayName)")
+            if let expires = expiresAt {
+                print("   Expires: \(expires)")
+            }
+            NotificationCenter.default.post(name: .licenseUpdated, object: nil)
+            return result
+
+        case .invalidKey:
+            licenseKeyError = "License key not found"
+            return result
+
+        case .expired:
+            licenseKeyError = "License has expired"
+            return result
+
+        case .revoked:
+            licenseKeyError = "License has been revoked"
+            return result
+
+        case .networkError:
+            licenseKeyError = "Network error. Check your connection."
+            return result
+
+        default:
+            return result
         }
-
-        print("✅ License key activated: \(normalizedKey) -> \(licenseTier.displayName)")
-        NotificationCenter.default.post(name: .licenseUpdated, object: nil)
-
-        return .success(tier: licenseTier)
     }
 
-    /// Validate license key with the server (optional online validation)
-    func validateLicenseKeyOnline(_ key: String) async -> LicenseKeyResult {
-        let normalizedKey = key.uppercased().trimmingCharacters(in: .whitespacesAndNewlines)
-
-        // First validate format
-        let (valid, _) = LicenseKeyValidator.validateFormat(normalizedKey)
-        guard valid else {
-            return .invalidFormat
-        }
-
-        // Call validation API
+    /// Validate license key with the server
+    private func validateWithServer(key: String, activate: Bool = false, machineId: String? = nil) async -> LicenseKeyResult {
         guard let url = URL(string: "https://nukemymac-website.vercel.app/api/validate") else {
             return .networkError
         }
@@ -407,29 +459,187 @@ class LicenseManager: ObservableObject {
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.timeoutInterval = 15
 
-        let body: [String: Any] = ["key": normalizedKey, "activate": true]
+        var body: [String: Any] = ["key": key, "activate": activate]
+        if let machineId = machineId {
+            body["machineId"] = machineId
+        }
         request.httpBody = try? JSONSerialization.data(withJSONObject: body)
 
         do {
             let (data, response) = try await URLSession.shared.data(for: request)
 
-            guard let httpResponse = response as? HTTPURLResponse,
-                  httpResponse.statusCode == 200 else {
+            guard let httpResponse = response as? HTTPURLResponse else {
                 return .networkError
             }
 
-            if let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
-               let isValid = json["valid"] as? Bool,
-               isValid,
-               let tierString = json["tier"] as? String {
+            let decoded = try JSONDecoder().decode(LicenseValidationResponse.self, from: data)
+
+            if decoded.valid, let tierString = decoded.tier {
                 let tier: LicenseTier = tierString == "yearly" ? .proYearly : .proLifetime
-                return .success(tier: tier)
+
+                // Parse expiration date if present
+                var expiresAt: Date?
+                if let expiresString = decoded.expiresAt {
+                    let formatter = ISO8601DateFormatter()
+                    formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+                    expiresAt = formatter.date(from: expiresString)
+                    // Try without fractional seconds if that fails
+                    if expiresAt == nil {
+                        formatter.formatOptions = [.withInternetDateTime]
+                        expiresAt = formatter.date(from: expiresString)
+                    }
+                }
+
+                return .success(tier: tier, expiresAt: expiresAt)
             } else {
-                return .invalidKey
+                // Check error type
+                let errorMsg = decoded.error?.lowercased() ?? ""
+                if errorMsg.contains("expired") {
+                    return .expired
+                } else if errorMsg.contains("revoked") || errorMsg.contains("refunded") {
+                    return .revoked
+                } else {
+                    return .invalidKey
+                }
             }
         } catch {
+            print("❌ License validation error: \(error)")
             return .networkError
+        }
+    }
+
+    /// Validate the current license online (called periodically)
+    func validateLicenseOnline() async {
+        guard let key = activatedLicenseKey else { return }
+
+        print("🔄 Validating license online...")
+        let result = await validateWithServer(key: key, activate: false)
+
+        switch result {
+        case .success(let tier, let expiresAt):
+            // Update local state
+            currentTier = tier
+            licenseExpiresAt = expiresAt
+            lastValidationDate = Date()
+            saveValidationState()
+            saveLicense()
+            print("✅ License validated: \(tier.displayName)")
+
+        case .expired:
+            // License expired - downgrade to free
+            print("⚠️ License has expired")
+            handleLicenseExpired()
+
+        case .revoked:
+            // License revoked - downgrade to free
+            print("⚠️ License has been revoked")
+            handleLicenseRevoked()
+
+        case .networkError:
+            // Network error - check if within grace period
+            print("⚠️ Network error during validation")
+            checkOfflineGracePeriod()
+
+        default:
+            // Invalid key - should not happen for previously valid key
+            print("⚠️ License validation failed")
+            handleLicenseInvalid()
+        }
+    }
+
+    private func handleLicenseExpired() {
+        currentTier = .free
+        licenseKeyError = "Your license has expired. Please renew to continue using Pro features."
+        saveLicense()
+        NotificationCenter.default.post(name: .licenseExpired, object: nil)
+    }
+
+    private func handleLicenseRevoked() {
+        activatedLicenseKey = nil
+        currentTier = .free
+        licenseExpiresAt = nil
+        UserDefaults.standard.removeObject(forKey: licenseKeyStorageKey)
+        saveLicense()
+        NotificationCenter.default.post(name: .licenseRevoked, object: nil)
+    }
+
+    private func handleLicenseInvalid() {
+        // Keep the license for now but mark for revalidation
+        lastValidationDate = nil
+    }
+
+    private func checkOfflineGracePeriod() {
+        guard let lastValidation = lastValidationDate else {
+            // Never validated - need to go online
+            return
+        }
+
+        let timeSinceValidation = Date().timeIntervalSince(lastValidation)
+        if timeSinceValidation > offlineGracePeriod {
+            // Grace period exceeded - downgrade
+            print("⚠️ Offline grace period exceeded")
+            currentTier = .free
+            licenseKeyError = "Please connect to the internet to validate your license."
+            saveLicense()
+        } else {
+            let daysRemaining = Int((offlineGracePeriod - timeSinceValidation) / 86400)
+            print("ℹ️ Offline grace period: \(daysRemaining) days remaining")
+        }
+    }
+
+    private func startValidationTimer() {
+        // Check every hour if validation is needed
+        validationTimer = Timer.scheduledTimer(withTimeInterval: 3600, repeats: true) { [weak self] _ in
+            Task { @MainActor in
+                await self?.checkAndValidateIfNeeded()
+            }
+        }
+    }
+
+    private func checkAndValidateIfNeeded() async {
+        guard activatedLicenseKey != nil else { return }
+
+        // Check if validation is needed
+        if let lastValidation = lastValidationDate {
+            let timeSinceValidation = Date().timeIntervalSince(lastValidation)
+            if timeSinceValidation >= validationInterval {
+                await validateLicenseOnline()
+            }
+        } else {
+            // Never validated
+            await validateLicenseOnline()
+        }
+
+        // Also check local expiration
+        checkLocalExpiration()
+    }
+
+    private func checkLocalExpiration() {
+        guard let expiresAt = licenseExpiresAt else { return }
+
+        if expiresAt < Date() {
+            print("⚠️ License expired locally")
+            handleLicenseExpired()
+        }
+    }
+
+    private func loadValidationState() {
+        if let timestamp = UserDefaults.standard.object(forKey: lastValidationKey) as? TimeInterval {
+            lastValidationDate = Date(timeIntervalSince1970: timestamp)
+        }
+        if let expiresTimestamp = UserDefaults.standard.object(forKey: licenseExpiresKey) as? TimeInterval {
+            licenseExpiresAt = Date(timeIntervalSince1970: expiresTimestamp)
+        }
+    }
+
+    private func saveValidationState() {
+        if let lastValidation = lastValidationDate {
+            UserDefaults.standard.set(lastValidation.timeIntervalSince1970, forKey: lastValidationKey)
+        }
+        if let expiresAt = licenseExpiresAt {
+            UserDefaults.standard.set(expiresAt.timeIntervalSince1970, forKey: licenseExpiresKey)
         }
     }
 
@@ -445,6 +655,32 @@ class LicenseManager: ObservableObject {
     /// Check if a license key is currently active
     var hasActiveLicenseKey: Bool {
         activatedLicenseKey != nil && (currentTier == .proYearly || currentTier == .proLifetime)
+    }
+
+    /// Days remaining until license expires (nil for lifetime)
+    var licenseDaysRemaining: Int? {
+        guard let expiresAt = licenseExpiresAt else { return nil }
+        let remaining = expiresAt.timeIntervalSince(Date())
+        return max(0, Int(ceil(remaining / 86400)))
+    }
+
+    /// Formatted license expiration string
+    var licenseExpirationText: String? {
+        guard let expiresAt = licenseExpiresAt else { return nil }
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        return "Expires \(formatter.string(from: expiresAt))"
+    }
+
+    /// Check if license is expiring soon (within 30 days)
+    var isLicenseExpiringSoon: Bool {
+        guard let days = licenseDaysRemaining else { return false }
+        return days <= 30 && days > 0
+    }
+
+    /// Force revalidation (for manual refresh)
+    func forceRevalidate() async {
+        await validateLicenseOnline()
     }
 
     private func saveLicenseKey() {
@@ -739,6 +975,8 @@ extension Notification.Name {
     static let trialExpired = Notification.Name("com.nukemymac.trialExpired")
     static let trialStarted = Notification.Name("com.nukemymac.trialStarted")
     static let licenseUpdated = Notification.Name("com.nukemymac.licenseUpdated")
+    static let licenseExpired = Notification.Name("com.nukemymac.licenseExpired")
+    static let licenseRevoked = Notification.Name("com.nukemymac.licenseRevoked")
 }
 
 // MARK: - String MD5 Helper (for key obfuscation)

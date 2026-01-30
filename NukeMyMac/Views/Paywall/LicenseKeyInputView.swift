@@ -187,7 +187,7 @@ struct LicenseKeyInputView: View {
                 isActivating = false
 
                 switch result {
-                case .success(let tier):
+                case .success(let tier, _):
                     activatedTier = tier
                     withAnimation {
                         showSuccess = true
@@ -198,6 +198,12 @@ struct LicenseKeyInputView: View {
 
                 case .invalidKey:
                     errorMessage = "This license key is not valid"
+
+                case .expired:
+                    errorMessage = "This license has expired. Please renew."
+
+                case .revoked:
+                    errorMessage = "This license has been revoked."
 
                 case .networkError:
                     errorMessage = "Network error. Please check your connection."
